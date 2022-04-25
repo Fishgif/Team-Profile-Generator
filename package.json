@@ -1,0 +1,26 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fishgif/Team-Profile-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fishgif/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/Fishgif/Team-Profile-Generator#readme",
+  "dependencies": {
+    "@types/jest": "^27.4.1",
+    "inquirer": "^8.2.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
