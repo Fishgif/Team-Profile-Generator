@@ -1,80 +1,47 @@
 
 const Employee = require("../../src/lib/employee");
 
+// Can instantiate object
+it("Can instantiate Employee", () => {
+    const employee = new Employee();
+    expect(typeof(employee)).toBe("object");
 
-describe ('Testing Employee class', () => {
-
-    describe('Employee class contain the attribute and methods needed', () => {
-
-        const defaultId = 245;
-        const defaultEmail = 'em245@em.com';
-        const defaultName = 'Em';
-
-    // expected
-
-    test('if Employee object has been created from the class', () => { 
-        const employee = new Employee(245, 'em245@em.com', 'Em')
-
-        expect(employee). toBeInstanceOf(Employee)
-        expect(employee). toBeInstanceOf(Object)
-    });
-
-    test('should fail if test does not have 3 arguments', () => {
-
-        expect(() => new Employee()).toThrow(Error)
-        expect(() => new Employee(defaultId)).toThrow(Error)
-        expect(() => new Employee(defaultId, defaultName)).toThrow(Error);
-        expect(new Employee(defaultName, defaultId, defaultEmail)).toBeInstanceOf(Employee);
-    })
-
-    test('Employee has email', () => {
-
-        // set up environment
-        
-        // define source of truth
-                        
-        // execute code
-        
-        // compare the result 
-        expect(true).toBe(false);
-    });
-
-    test('Employee has name', () => {
-        expect(true).toBe(false);
-    });
-
-    test('should have id', () => {
-        expect(true).toBe(false);
-    })
-
-    test('getName() should return name', () => {
-
-        expect(true).toBe(false);
-    })
-
-    test('getId() should return id', () => {
-
-        expect(true).toBe(false);
-    })
-    test('getEmail() should return email', () => {
-
-        expect(true).toBe(false);
-    })
-  // un-expected
-
-  test('should break if no argument passed in constructor ', () => {
-    expect(true).toBe(false);
-});
-
-test('should receive valid email', () => {
-    expect(true).toBe(false);
-
-});
-
-});
-    });
-
-
-
+})
+//   can take in id and set as argument
+  it("can set an id via constructor argument", () => {
+    const empId = 12;
+    const emp = new Employee("jon", empId);
+    expect(emp.id).toBe(empId);
+  });
+  //   can take in email and set as argument
+  it("can set email via constructor argument", () => {
+    const testEmail = "jon@test.com";
+    const emp = new Employee("jon", 12, testEmail);
+    expect(emp.email).toBe(testEmail);
+  });
+   //   can test get name 
+  it("can get name via getName()", () => {
+    const testName = "jon";
+    const emp = new Employee(testName);
+    expect(emp.getName()).toBe(testName);
+  });
   
-
+  it("can get id from getId()", () => {
+    const getId = 12;
+    const emp = new Employee("jon", getId);
+    expect(emp.getId()).toBe(getId);
+  });
+  
+  it("can get email from getEmail()", () => {
+    const testGetEmail = "jon@test.com";
+    const emp = new Employee("jon", 12, testGetEmail );
+    expect(emp.getEmail()).toBe(testGetEmail );
+  });
+  
+  it("get role should return employee", () => {
+    const testVal = "Employee";
+    const emp = new Employee("jon", 12, "jon@test.com");
+    expect(emp.getRole()).toBe(testVal);
+  });
+  
+ 

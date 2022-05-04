@@ -4,111 +4,129 @@ const fs = require ('fs');
 
 // lib modules
 const Manager = require ('.//src/lib/manager');
-const Engineer = require ('.//src/lib/engineer');
+const Engineer = require ('.//src/lib/engineer')
 const Intern = require ('.//src/lib/intern');
 
-let employeeInfo = [];
+let newEmployeeInfo = [];
 
 
-// Array object questions asked to user
-function prompt(){
-    
-    return inquirer.prompt([
-        
+// Array object questions asked to use
+
+const questions = async () => {
+    const answers = await inquirer
+      .prompt([
         {
-            type: "list",
-            message: "Choose the role fo the person to be added",
-            name: "role",
-            choices: ["Manager", "Engineer", "Intern"],
-        },
-        // name
-        {
-            type: "input",
-            message: "What is the employees name?",
-            name: "name",
-        },
-    
-        // email
-        {
-            type: "input",
-            name: "email",
-            message: "What is the employees email?",
-        },
-        // id
-        {
-            type: "input",
-            name: "id",
-            message: "What is the employees id?",
-        },
-        // Special questions
-        {
-            type: "input",
-            name: "officeNumber",
-            message: "What is the managers office number?",
-            when: (answers) => answers.role === "Manager",
+          type: "input",
+          message: "What is Employees name?",
+          name: "name",
         },
         {
-            type: "input",
-            name: "github",
-            message: "What is the Engineers github information",
-            when: (answers) => answers.role === "Engineer",
+          type: "input",
+          message: "What is Employees name ID number?",
+          name: "id",
         },
         {
-            type: "input",
-            name: "school",
-            message: "Which school is the intern from?",
-            when: (answers) => answers.role === "Intern",
+          type: "input",
+          message: "What is Employees email?",
+          name: "email",
         },
-        // Add addition employees
         {
-            type: "list",
-            message: "Would you like to add more team members?",
-            choices: [
-                "yes",
-                "no"
-            ],
-            name: "addAgain"
-        }
-    ]).then((answers) => {
-    
-        // create new employee
-    
-        if(answers.role === 'Manager'){
-            employeeInfo.push(new Manager(answers.name, answers.id, answers.email, answers.officeNumber));
-        }
-    
-        if (answers.role === "Engineer") {
-            employeeInfo.push(
-                new Engineer(answers.name,answers.id,answers.email,answers.github)
+          type: "list",
+          message: "What is the Employees role?",
+          name: "role",
+          choices: ["Engineer", "Intern", "Manager"],
+        },
+      ])
+  
+      //  console.log(answers);
+        // if manager selected, answer these specific question
+        if (answers.role === "Manager") {
+          const managerAns = await inquirer
+            .prompt([
+              {
+                type: "input",
+                message: "What is your office number",
+                name: "officeNumber",
+              },
+            ])
+            const newManager = new Manager(
+              answers.name,
+              answers.id,
+              answers.email,
+              managerAns.officeNumber
             );
-        }
-    
-        if (answers.role === "Intern") {
-            employeeInfo.push(
-                new Intern(answers.name,answers.id,answers.email,answers.intern)
+            newEmployeeInfo.push(newManager);
+            
+          // if engineer selected answer these set of questions
+        } else if (answers.role === "Engineer") {
+          const githubAns = await inquirer
+            .prompt([
+              {
+                type: "input",
+                message: "What is your GitHub name?",
+                name: "github",
+              }
+            ])
+              const newEngineer = new Engineer(
+                answers.name,
+                answers.id,
+                answers.email,
+                githubAns.github
+              );
+              newEmployeeInfo.push(newEngineer);
+            
+          // if intern selected answer these set of questions
+        } else if (answers.role === "Intern") {
+          const internAns = await inquirer
+            .prompt([
+              {
+                type: "input",
+                message: "What university does he attend attend?",
+                name: "school",
+              },
+            ])
+            
+            const newIntern = new Intern(
+              answers.name,
+              answers.id,
+              answers.email,
+              internAns.school
             );
-        }
+            newEmployeeInfo.push(newIntern);          
+        } 
+  
+  }; //end function
+  
+  async function promptQuestions() {
+    await questions()
+      
     
-        // if new employee selected loop again
-        if(answers.addAgain === "yes"){
-            return prompt();
-        }else{
-            // if no \
-            // generate html based on the members added
-            return createTeam()
+    const addMemberAns = await inquirer
+      .prompt([
+        {
+          name:'addMember',
+          type: 'list',
+          choices: ['Add a new member', 'Create team'],
+          message: "Would you like to create a new team member?"
         }
+      ])
+  
+      if (addMemberAns.addMember === 'Add a new member') {
+        return promptQuestions()
+      }
+      return createTeam();
+  }  
+  
+  promptQuestions();
+  
 
-    
-    });    
-}
-
-prompt();
-
-function createTeam () {
-    console.log("new guy", employeeInfo)
+  function createTeam () {
+    console.log("New Team Member", newEmployeeInfo)
     fs.writeFileSync(
       "./output/index.html",
-      generateHtml(employeeInfo),
+      generateHtml(newEmployeeInfo),
       "utf-8"
     );
   }
+  
+  
