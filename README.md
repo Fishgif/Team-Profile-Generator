@@ -12,8 +12,8 @@ SO THAT I have quick access to their emails and GitHub profiles
 
 This project uses Node.js in the  command-line application that takes in information about employees on a software engineering team, then generates an HTML webpage that displays summaries for each person. This project makes use of test driven development. Inquirer and jest are needed before running the application
 
->> - Deployed Project URL:  https://github.com/Fishgif/read-me-generator
->> - Project Repository URL:  https://fishgif.github.io/read-me-generator/
+>> - Deployed Project URL:   https://fishgif.github.io/Team-Profile-Generator/
+>> - Project Repository URL:  https://github.com/Fishgif/Team-Profile-Generator
 
 ## Demo
 [Team Profile Generator] (Team-Profile-Generator.gif) 
