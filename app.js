@@ -95,7 +95,7 @@ const questions = async () => {
             newEmployeeInfo.push(newIntern);          
         } 
   
-  }; //end function
+  }; //end fu
   
   async function promptQuestions() {
     await questions()
